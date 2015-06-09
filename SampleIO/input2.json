@@ -1,0 +1,31 @@
+{
+  "Arguments": {
+    "RxLocations": {
+      "Lat": {"Start": -90, "Step": 3, "Count": 61}, 
+      "Lon": {"Start": -180, "Step": 3, "Count": 120}
+    },
+    "Hours": {"Start": 1, "Step": 1, "Count": 24},
+    "Freqs": [3.5, 7, 10, 14, 18, 21, 24.9, 28],
+    "IncludeMuf": false
+  },  
+  "Params": {
+    "RequiredReliability": 0.9,
+    "MultipathPowerTolerance": 3,
+    "Ssn": 100,
+    "MinAngle": 0.1,
+    "ManMadeNoiseAt3MHz": 145,
+    "LongPath": false,
+    "Month": 6,
+    "RequiredSnr": 73,
+    "MaxTolerableDelay": 0.1,
+    "TxLoc": {"Lat": 35.80, "Lon": -5.90},
+    "TxPower": 500000
+  },  
+  "Outputs": [
+    "MODE", "TANGLE", "RANGLE", "DELAY", "V_HITE", "MUFDAY", "LOSS",
+    "DBU", "S_DBW", "N_DBW", "SNR", "RPWRG", "REL", "MPROB", "SPRB", "SIG_LW",
+    "SIG_UP", "SNR_LW", "SNR_UP", "TGAIN", "RGAIN", "SNRXX"
+  ],        
+  "OutputFormat": "csv"
+}  
+    

@@ -1,0 +1,31 @@
+{
+  "Arguments": {
+    "RxLocations": {
+      "Azim": {"Start": 0, "Step": 3, "Count": 120}, 
+      "Dist": {"Start": 0, "Step": 3, "Count": 61}
+    },
+    "Hours": [8],
+    "Freqs": {"Start": 2, "Step": 1, "Count": 29},
+    "IncludeMuf": false
+  },  
+  "Params": {
+    "RequiredReliability": 0.9,
+    "MultipathPowerTolerance": 3,
+    "Ssn": 100,
+    "MinAngle": 0.1,
+    "ManMadeNoiseAt3MHz": 145,
+    "LongPath": false,
+    "Month": 6,
+    "RequiredSnr": 73,
+    "MaxTolerableDelay": 0.1,
+    "TxLoc": {"Lat": 35.80, "Lon": -5.90},
+    "TxPower": 500000
+  },  
+  "Outputs": [
+    "MODE", "TANGLE", "RANGLE", "DELAY", "V_HITE", "MUFDAY", "LOSS",
+    "DBU", "S_DBW", "N_DBW", "SNR", "RPWRG", "REL", "MPROB", "SPRB", "SIG_LW",
+    "SIG_UP", "SNR_LW", "SNR_UP", "TGAIN", "RGAIN", "SNRXX"
+  ],        
+  "OutputFormat": "json"
+}  
+    

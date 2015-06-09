@@ -1,0 +1,28 @@
+{
+  "Arguments": {
+    "RxLocations": [{"Lat": 44.90, "Lon": 20.50, "Label": "BELGRADE"}],
+    "Hours": {"Start": 1, "Step": 1, "Count": 24},
+    "Freqs": [6.07, 7.20, 9.70, 11.85, 13.70, 15.35, 17.73, 21.65, 25.89],
+    "IncludeMuf": true
+  },  
+  "Params": {
+    "RequiredReliability": 0.9,
+    "MultipathPowerTolerance": 3,
+    "Ssn": 100,
+    "MinAngle": 0.1,
+    "ManMadeNoiseAt3MHz": 145,
+    "LongPath": false,
+    "Month": 6,
+    "RequiredSnr": 73,
+    "MaxTolerableDelay": 0.1,
+    "TxLoc": {"Lat": 35.80, "Lon": -5.90, "Label": "TANGIER, Morocco"},
+    "TxPower": 500000
+  },  
+  "Outputs": [
+    "MODE", "TANGLE", "RANGLE", "DELAY", "V_HITE", "MUFDAY", "LOSS",
+    "DBU", "S_DBW", "N_DBW", "SNR", "RPWRG", "REL", "MPROB", "SPRB", "SIG_LW",
+    "SIG_UP", "SNR_LW", "SNR_UP", "TGAIN", "RGAIN", "SNRXX"
+  ],        
+  "OutputFormat": "voa"
+}  
+    
