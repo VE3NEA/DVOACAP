@@ -305,9 +305,6 @@ begin
       Interpolate(18, 28, DensTrueHeight);
       Interpolate(28, 50, DensTrueHeight);
       end;
-
-  for i:=2 to 50 do
-    Assert(DensTrueHeight[i] >= DensTrueHeight[i-1]);
 end;
 
 
