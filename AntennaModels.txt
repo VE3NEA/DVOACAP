@@ -1,0 +1,31 @@
+CREATING YOUR OWN ANTENNA MODELS FOR DVOACAP
+
+
+1. ANTENNA MODEL
+
+TAntennaModel is the base class for all custom antenna models. To create your own antenna model, create a class that descends from TAntennaModel and overrides its GetGainDb method so that it returns the antenna gain, in dBi, for the given elevation angle, AElev, azimuth, FAzimuth, and frrquency FFrequency. 
+
+If your model works only in a certain range of frequencies, e.g., on one Ham band, set the FLowFrequency and FHighFrequency to the start and end of the range respectively.
+
+All angles are in radians, and frequencies are in Hertz.
+
+
+2. ANTENNA FARM
+
+TAntennaFarm is a collection of antennas available at the user's radio station. To add your new model to the farm,
+you can modify the constructor, TAntennaFarm.Create, and add the code that creates your model and adds it to the list of antennas, FAnts. Alternatively, you can create models and add them to the TAntennaFArm.FAnts array at run time, to allow the user specify what anntenas to use.
+
+When DVOACAP needs to know the antenna gain, TAntennaFArm looks through its antennas and finds the one that covers the required frequency. If no antenna is found, it uses the isotropic antenna. Once the antenna is selected, DVOACAP sets its azimuth and frequency properties, then calls its GetGainDb method for different elevation angles to find out the gain.
+
+3. GAIN CALCULATION
+
+How to calculate the antenna gain is up to the model developer. For some simple antennas, such as Ground Plane, dipole or Yagi, simple formulas exist for gain calculation, see the source code in the VOACAP's  HFANTWIN.zip module for examples:
+
+http://www.greg-hand.com/voacap_source/HFANTWIN.zip
+
+For more complex antennas, the gain may be stored in a table and computed by interpoating the table data. There are many ways to create such tables, e.g., using one of the antenna design programs that employ the NEC2 model, or using the VOACAP itself. The tutorial below shows how to create antenna models for HamCap, the same approach may be used for generating the gain tables for the DVOACAP models:
+
+https://www.voacap.com/hamcap-type1314.html
+
+
+73 Alex VE3NEA
