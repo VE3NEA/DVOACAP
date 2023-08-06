@@ -15,6 +15,10 @@
 //------------------------------------------------------------------------------
 unit VoaTypes;
 
+{$IFDEF FPC}
+  {$MODE OBJFPC}{$MODESWITCH ADVANCEDRECORDS}
+{$ENDIF}
+
 interface
 
 uses

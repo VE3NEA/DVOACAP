@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="dvoa"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <Units>
+      <Unit>
+        <Filename Value="dvoa.ppr"/>
+        <FRMtype Value="0"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\IoFmt.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\Predictor.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\VoaCoeff.res"/>
+        <FRMtype Value="0"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\AntGain.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\FrMaps.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\IonoProf.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\LayrParm.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\MagFld.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\MufCalc.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\NoiseMdl.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\PathGeom.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\Reflx.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\SinCos.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\Sun.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\VoaCapEng.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\VoaTypes.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\3rdParty_Json\superobject.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="dvoa"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <Libraries Value="C:\codetyphon\binLibraries\android-4.1.x-api16-arm"/>
+      <OtherUnitFiles Value="..\DVoaDll;..\DVoaClass;..\DVoaDll\3rdParty_Json"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <RelocatableUnit Value="True"/>
+      <TargetCPU Value="x86_64"/>
+      <TargetOS Value="win64"/>
+    </CodeGeneration>
+    <Linking>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

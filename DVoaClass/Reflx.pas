@@ -178,8 +178,8 @@ var
   Mode: PModeInfo;
 begin
   Mode := @Refl[ModeCnt];
-  Mode.Ref.Elevation := Angles[AngIdx];
-  Mode.Layer := Lr;
+  Mode^.Ref.Elevation := Angles[AngIdx];
+  Mode^.Layer := Lr;
 
   FProf.PopulateModeInfo(Mode^, HtIdx);
 
@@ -194,8 +194,8 @@ var
   r: Single;
 begin
   Mode := @Refl[ModeCnt];
-  Mode.Ref.Elevation := Angles[AngIdx];
-  Mode.Layer := Lr;
+  Mode^.Ref.Elevation := Angles[AngIdx];
+  Mode^.Layer := Lr;
 
   r := FProf.ObliqueFreq[AngIdx, HtIdx + 1] - FProf.ObliqueFreq[AngIdx, HtIdx];
   r := (FKhz - FProf.ObliqueFreq[AngIdx, HtIdx]) / Max(1, r);
@@ -214,8 +214,8 @@ begin
 
   //INSERT OF CUSP
   Mode := @Refl[ModeCnt];
-  Mode.Ref.Elevation := PenAngles[Lr];
-  Mode.Layer := Lr;
+  Mode^.Ref.Elevation := PenAngles[Lr];
+  Mode^.Layer := Lr;
   FProf.PopulateModeInfo(Mode^, HighH);
   AddRefl;
 
@@ -224,8 +224,8 @@ begin
 
   //INSERT CUSP FOR NEXT LAYER
   Mode := @Refl[ModeCnt];
-  Mode.Ref.Elevation := Refl[ModeCnt-1].Ref.Elevation + 0.001 * RinD;
-  if FProf.F1.Fo > 0 then Mode.Layer := Succ(Lr) else Mode.Layer := lrF2;
+  Mode^.Ref.Elevation := Refl[ModeCnt-1].Ref.Elevation + 0.001 * RinD;
+  if FProf.F1.Fo > 0 then Mode^.Layer := Succ(Lr) else Mode^.Layer := lrF2;
   FProf.PopulateModeInfo(Mode^, HighH+1);
   AddRefl;
 end;
@@ -240,17 +240,17 @@ begin
 
   //CORRECT MARTYN S THEOREM
   Xfsq := Sqr(FMhz / FProf.F2.Fo);
-  Xmut := 1 - Sqr(Mode.Ref.VertFreq / FMhz);
-  Corr := Xfsq * Xmut * CorrToMartynsTheorem(Mode.Ref);
-  Mode.Ref.VirtHeight := Mode.Ref.VirtHeight + Corr;
+  Xmut := 1 - Sqr(Mode^.Ref.VertFreq / FMhz);
+  Corr := Xfsq * Xmut * CorrToMartynsTheorem(Mode^.Ref);
+  Mode^.Ref.VirtHeight := Mode^.Ref.VirtHeight + Corr;
 
   //ground distance, in radians
-  Mode.HopDist := HopDistance(Mode.Ref.Elevation, Mode.Ref.VirtHeight);
+  Mode^.HopDist := HopDistance(Mode^.Ref.Elevation, Mode^.Ref.VirtHeight);
 
   //min and max distance
-  if Mode.HopDist < SkipDistance then SkipDistance := Mode.HopDist;
-  if (Mode.HopDist >= MaxDistance) and (Mode.Ref.Elevation >= MinAngle)
-    then MaxDistance := Mode.HopDist;
+  if Mode^.HopDist < SkipDistance then SkipDistance := Mode^.HopDist;
+  if (Mode^.HopDist >= MaxDistance) and (Mode^.Ref.Elevation >= MinAngle)
+    then MaxDistance := Mode^.HopDist;
 
   //if array full then done
   Inc(ModeCnt);
@@ -335,22 +335,22 @@ var
   Mode: PModeInfo;
 begin
   Mode := @Modes[ModeCnt];
-  Mode.Layer := Refl[AIdx].Layer;
-  Mode.HopDist := AHopDist;
-  Mode.HopCnt := AHopCnt;
+  Mode^.Layer := Refl[AIdx].Layer;
+  Mode^.HopDist := AHopDist;
+  Mode^.HopCnt := AHopCnt;
 
   //DO LINEAR INTERPOLATION
   r := (AHopDist - Refl[AIdx].HopDist) / (Refl[AIdx+1].HopDist - Refl[AIdx].HopDist);
-  Mode.Ref.TrueHeight := Refl[AIdx].Ref.TrueHeight * (1-r) + Refl[AIdx+1].Ref.TrueHeight * r;
-  Mode.Ref.VirtHeight := Refl[AIdx].Ref.VirtHeight * (1-r) + Refl[AIdx+1].Ref.VirtHeight * r;
-  Mode.Ref.DevLoss := Refl[AIdx].Ref.DevLoss * (1-r) + Refl[AIdx+1].Ref.DevLoss * r;
+  Mode^.Ref.TrueHeight := Refl[AIdx].Ref.TrueHeight * (1-r) + Refl[AIdx+1].Ref.TrueHeight * r;
+  Mode^.Ref.VirtHeight := Refl[AIdx].Ref.VirtHeight * (1-r) + Refl[AIdx+1].Ref.VirtHeight * r;
+  Mode^.Ref.DevLoss := Refl[AIdx].Ref.DevLoss * (1-r) + Refl[AIdx+1].Ref.DevLoss * r;
 
   //BUT FORCE CORRECT GEOMETRY BY CALCULATING RADIATION ANGLE AND
   //SNELL"S LAW BY CALCULATING FV
-  Mode.Ref.Elevation := CalcElevationAngle(AHopDist, Mode.Ref.VirtHeight);
-  Mode.Ref.VertFreq := FMhz * CosOfIncidence(Mode.Ref.Elevation, Mode.Ref.TrueHeight);
+  Mode^.Ref.Elevation := CalcElevationAngle(AHopDist, Mode^.Ref.VirtHeight);
+  Mode^.Ref.VertFreq := FMhz * CosOfIncidence(Mode^.Ref.Elevation, Mode^.Ref.TrueHeight);
 
-  if Mode.Ref.Elevation >= MinAngle then
+  if Mode^.Ref.Elevation >= MinAngle then
     begin
     Assert(Modes[ModeCnt].Ref.VirtHeight > 70);
     Inc(ModeCnt);
@@ -437,7 +437,7 @@ begin
 
       //CORRECTION TO MARTYN S THEOREM,SEE CURMUF
       Mode.Ref.VirtHeight := Mode.Ref.VirtHeight +
-        Sqr(ModeMuf /FProf.Layers[L].Fo) *
+        Sqr(ModeMuf /FProf.Layers[L]^.Fo) *
         Sqr(SinOfIncidence(Mode.Ref.Elevation, Mode.Ref.TrueHeight)) *
         CorrToMartynsTheorem(Mode.Ref);
 
@@ -458,7 +458,7 @@ var
   Mode: TModeInfo;
   Idx: integer;
   Freq, r: Single;
-  Lr: TIonoLayer;
+  Layer: TIonoLayer;
 begin
   Freq := FMhz - 0.001;
 
@@ -476,9 +476,9 @@ begin
   Mode.HopCnt := AHopCnt;
 
   //which layer reflects?
-  for Lr:=Low(TIonoLayer) to High(TIonoLayer) do
-    if Mode.Ref.TrueHeight < FProf.Layers[Lr].Hm then
-      begin Mode.Layer := Lr; Break; end;
+  for Layer:=Low(TIonoLayer) to High(TIonoLayer) do
+    if Mode.Ref.TrueHeight < FProf.Layers[Layer]^.Hm then
+      begin Mode.Layer := Layer; Break; end;
 
   AddMode(Mode);
 end;

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="dvoa.ppr"/>
+        <FRMtype Value="0"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="12" Y="7"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\IoFmt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="32" Y="21"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\Predictor.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\VoaCoeff.res"/>
+        <FRMtype Value="0"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\AntGain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\FrMaps.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="147"/>
+        <CursorPos X="81" Y="159"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\IonoProf.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="609"/>
+        <CursorPos X="17" Y="686"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\LayrParm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\MagFld.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\MufCalc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\NoiseMdl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\PathGeom.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\Reflx.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="404"/>
+        <CursorPos X="17" Y="481"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\SinCos.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\Sun.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\VoaCapEng.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1300"/>
+        <CursorPos X="27" Y="1361"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaClass\VoaTypes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="214"/>
+        <CursorPos X="78" Y="247"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\3rdParty_Json\superobject.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\DVoaDll\dvoa.res"/>
+        <FRMtype Value="0"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

@@ -623,11 +623,11 @@ begin
 
 
   //MUF FOR THIS HOP DISTANCE
-  ModeMufElev := CalcElevationAngle(AMode.HopDist, M.Ref.VirtHeight);
-  ModeMuf := M.Ref.VertFreq / CosOfIncidence(ModeMufElev, M.Ref.TrueHeight);
+  ModeMufElev := CalcElevationAngle(AMode.HopDist, M^.Ref.VirtHeight);
+  ModeMuf := M^.Ref.VertFreq / CosOfIncidence(ModeMufElev, M^.Ref.TrueHeight);
 
   //THIS IS MUFDAY
-  AMode.Sig.MufDay := CalcMufProb(Freq, ModeMuf, M.Muf, M.SigLo, M.SigHi);
+  AMode.Sig.MufDay := CalcMufProb(Freq, ModeMuf, M^.Muf, M^.SigLo, M^.SigHi);
 
   //ADD MORE LOSS WHEN MUFDAY GETS VERY LOW
   if AMode.Sig.MufDay < 1e-4 then
@@ -635,16 +635,16 @@ begin
 
   //some more losses
   Sec := 1 / CosOfIncidence(AMode.Ref.Elevation, AMode.Ref.TrueHeight);
-  XMUF := M.Ref.VertFreq * Sec;
-  XLS := CalcMufProb(Freq, XMUF, M.Muf, M.SigLo, M.SigHi);
+  XMUF := M^.Ref.VertFreq * Sec;
+  XLS := CalcMufProb(Freq, XMUF, M^.Muf, M^.SigLo, M^.SigHi);
   XLS := -ToDb(Max(1e-6, XLS)) * Sec;
   AMode.Sig.TotalLoss_dB := AMode.Sig.TotalLoss_dB + HopCnt * XLS;
 
-  CPR := M.Ref.VertFreq / M.Muf;
-  XlsLo := CalcMufProb(Freq, M.Fot * Sec * CPR, M.Fot, M.SigLo, M.SigHi);
+  CPR := M^.Ref.VertFreq / M^.Muf;
+  XlsLo := CalcMufProb(Freq, M^.Fot * Sec * CPR, M^.Fot, M^.SigLo, M^.SigHi);
   XlsLo := -ToDb(Max(1e-6, XlsLo)) * Sec;
 
-  XlsHi := CalcMufProb(Freq, M.Hpf * Sec * CPR, M.Hpf, M.SigLo, M.SigHi);
+  XlsHi := CalcMufProb(Freq, M^.Hpf * Sec * CPR, M^.Hpf, M^.SigLo, M^.SigHi);
   XlsHi := -ToDb(Max(1e-6, XlsHi)) * Sec;
 
   //DECILES OF SIGNAL LEVEL
@@ -816,11 +816,11 @@ begin
     //MAKE SELECTION BASED ON RELIABILITY FIRST BUT IF CLOSE SELECT ON
     //LOWER NUMBER OF HOPS (IF THE NUMBER OF HOPS ARE EQUAL SELECT BY
     //MEDIAN SNR)
-    if Modes[m].Sig.Reliability > (Result.Sig.Reliability + 0.05) then Result := @Modes[m]
-    else if Modes[m].Sig.Reliability < (Result.Sig.Reliability - 0.05) then Continue
-    else if Modes[m].HopCnt < Result.HopCnt then Result := @Modes[m]
-    else if Modes[m].HopCnt > Result.HopCnt then Continue
-    else if Modes[m].Sig.Snr_dB > Result.Sig.Snr_dB then Result := @Modes[m];
+    if Modes[m].Sig.Reliability > (Result^.Sig.Reliability + 0.05) then Result := @Modes[m]
+    else if Modes[m].Sig.Reliability < (Result^.Sig.Reliability - 0.05) then Continue
+    else if Modes[m].HopCnt < Result^.HopCnt then Result := @Modes[m]
+    else if Modes[m].HopCnt > Result^.HopCnt then Continue
+    else if Modes[m].Sig.Snr_dB > Result^.Sig.Snr_dB then Result := @Modes[m];
 end;
 
 
@@ -840,19 +840,19 @@ begin
   //MOST RELIABLE  MODE
   BestMode := FindBestMode;
 
-  Result.TxElevation := BestMode.Ref.Elevation;
-  Result.VirtHeight := BestMode.Ref.VirtHeight;
-  Result.HopCnt := BestMode.HopCnt;
-  Result.Sig := BestMode.Sig;
+  Result.TxElevation := BestMode^.Ref.Elevation;
+  Result.VirtHeight := BestMode^.Ref.VirtHeight;
+  Result.HopCnt := BestMode^.HopCnt;
+  Result.Sig := BestMode^.Sig;
   Result.Noise_dBW := FNoise.CombinedNoise.Value.Mdn;
 
-  Result.ModeT := BestMode.Layer;
+  Result.ModeT := BestMode^.Layer;
 
   //ADD THE SIGNALS RANDOM PHASE i.e. ADD THE POWERS IN WATTS
   if Length(Modes) > 1 then
     begin
     CalcSumOfModes(Modes, Result);
-    Result.Sig.Snr_dB := BestMode.Sig.Snr_dB + Result.Sig.Power_dBW - BestMode.Sig.Power_dBW;
+    Result.Sig.Snr_dB := BestMode^.Sig.Snr_dB + Result.Sig.Power_dBW - BestMode^.Sig.Power_dBW;
     CalcReliability(Result.Sig, true);
     end;
 
@@ -1076,10 +1076,10 @@ begin
   Result := 0.001;
   if FPath.Dist > Rad_7000Km then Exit;
 
-  PowerLimit := BestMode.Sig.Power_dBW - Pm.MultipathPowerTolerance;
+  PowerLimit := BestMode^.Sig.Power_dBW - Pm.MultipathPowerTolerance;
 
   for m:=0 to High(Modes) do
-    if (Abs(Modes[m].Sig.Delay_ms - BestMode.Sig.Delay_ms) > Pm.MaxTolerableDelay) and
+    if (Abs(Modes[m].Sig.Delay_ms - BestMode^.Sig.Delay_ms) > Pm.MaxTolerableDelay) and
        (Modes[m].Sig.Power_dBW > PowerLimit) then
       Result := Max(Result, Modes[m].Sig.Reliability);
 end;
@@ -1123,78 +1123,78 @@ begin
   BestRxMode := SelectOptimumAngle(RxModes, RxAnts);
 
   //AVERAGE TAKE-OFF ANGLE
-  AvgElevation := 0.5 * (BestTxMode.Ref.Elevation + BestRxMode.Ref.Elevation);
+  AvgElevation := 0.5 * (BestTxMode^.Ref.Elevation + BestRxMode^.Ref.Elevation);
   //AVERAGE VIRTUAL HEIGHT
-  Md.Ref.VirtHeight := 0.5 * (BestTxMode.Ref.VirtHeight + BestRxMode.Ref.VirtHeight);
+  Md^.Ref.VirtHeight := 0.5 * (BestTxMode^.Ref.VirtHeight + BestRxMode^.Ref.VirtHeight);
 
   //path structure: 0.5*ramp + straight + 0.5*ramp
-  HopDist := HopDistance(AvgElevation, Md.Ref.VirtHeight);
-  Ramp := HopLength3D(AvgElevation, HopDist, Md.Ref.VirtHeight);
-  PathLen := Ramp + (EarthR + Md.Ref.VirtHeight) * Max(0.001, FPath.Dist - HopDist);
+  HopDist := HopDistance(AvgElevation, Md^.Ref.VirtHeight);
+  Ramp := HopLength3D(AvgElevation, HopDist, Md^.Ref.VirtHeight);
+  PathLen := Ramp + (EarthR + Md^.Ref.VirtHeight) * Max(0.001, FPath.Dist - HopDist);
 
   //FREE-SPACE CONVERGENCE FACTOR
   ConvFact := PathLen / EarthR * Cos(AvgElevation) / Max(0.000001, Abs(Sin(FPath.Dist)));
   ConvFact := Min(15, ToDb(ConvFact));
   //FREE-SPACE LOSS
-  Md.FreeSpaceLoss := 36.58 + 2 * ToDb(0.6214 * PathLen * Freq) - ConvFact;
+  Md^.FreeSpaceLoss := 36.58 + 2 * ToDb(0.6214 * PathLen * Freq) - ConvFact;
 
   //IONOSPHERIC DISTANCE
-  DistI := FPath.Dist - 0.5 * (BestTxMode.HopDist + BestRxMode.HopDist);
+  DistI := FPath.Dist - 0.5 * (BestTxMode^.HopDist + BestRxMode^.HopDist);
   //THE DISTANCE SUPPORTING M MODES, E.G., NIGHT-DAY-NIGHT PATH
   DistM := CalcMModeDistance(DistI, Freq);
   DistF := Max(0, DistI - DistM);
   //loss due to distance
-  LossM := DistM * EarthR * GetAbsPerKm(Freq, AvgElevation, Md.Ref.VirtHeight, DistM, 0.1);
-  LossF := DistF * EarthR * GetAbsPerKm(Freq, AvgElevation, Md.Ref.VirtHeight, DistF, FAbsorptionIndex);
+  LossM := DistM * EarthR * GetAbsPerKm(Freq, AvgElevation, Md^.Ref.VirtHeight, DistM, 0.1);
+  LossF := DistF * EarthR * GetAbsPerKm(Freq, AvgElevation, Md^.Ref.VirtHeight, DistF, FAbsorptionIndex);
 
   //LOSS AT TRANSMITTER END
-  TxEndLoss := 0.5 * (BestTxMode.AbsorptionLoss + BestTxMode.DeviationTerm);
+  TxEndLoss := 0.5 * (BestTxMode^.AbsorptionLoss + BestTxMode^.DeviationTerm);
   //LOSS AT RECEIVER END
-  RxEndLoss := 0.5 * (BestRxMode.AbsorptionLoss + BestRxMode.DeviationTerm);
+  RxEndLoss := 0.5 * (BestRxMode^.AbsorptionLoss + BestRxMode^.DeviationTerm);
 
   //AVERAGE GROUND LOSS
-  Md.GroundLoss := 0.5 * (BestTxMode.GroundLoss + BestRxMode.GroundLoss);
-  HopCnt := Max(1, DistF / (0.5 * (BestTxMode.HopDist + BestRxMode.HopDist)));
+  Md^.GroundLoss := 0.5 * (BestTxMode^.GroundLoss + BestRxMode^.GroundLoss);
+  HopCnt := Max(1, DistF / (0.5 * (BestTxMode^.HopDist + BestRxMode^.HopDist)));
 
   //TRANSMISSION LOSS
-  Md.Sig.TotalLoss_dB := Md.FreeSpaceLoss + TxEndLoss + LossM
-    + LossF + RxEndLoss + (HopCnt - 1) * Md.GroundLoss + Adj_Auroral
-    - Md.Sig.TxGain_dB - Md.Sig.RxGain_dB;
+  Md^.Sig.TotalLoss_dB := Md^.FreeSpaceLoss + TxEndLoss + LossM
+    + LossF + RxEndLoss + (HopCnt - 1) * Md^.GroundLoss + Adj_Auroral
+    - Md^.Sig.TxGain_dB - Md^.Sig.RxGain_dB;
 
-  HopCnt := Max(1, FPath.Dist / (BestTxMode.HopDist + BestRxMode.HopDist));
-  Md.HopCnt := Trunc(HopCnt); //{?}
-  Md.Sig.TxGain_dB := TxAnts.CurrentAntenna.GetGainDb(BestRxMode.Ref.Elevation);
-  Md.Sig.RxGain_dB := RxAnts.CurrentAntenna.GetGainDb(BestTxMode.Ref.Elevation);
-  Md.Sig.Delay_ms := PathLen / VofL;
-  Md.Ref.Elevation := BestTxMode.Ref.Elevation;
-  Md.AbsorptionLoss := 0.5 * (BestTxMode.AbsorptionLoss + BestRxMode.AbsorptionLoss);
-  Md.Obscuration := 0.5 * (BestTxMode.Obscuration + BestRxMode.Obscuration);
-  Md.DeviationTerm := 0.5 * (BestTxMode.DeviationTerm + BestRxMode.DeviationTerm);
-  Md.Sig.Power_dBW := TxAnts.CurrentAntenna.TxPower_dBW - Md.Sig.TotalLoss_dB;
-  Md.Sig.Field_dBuV := 107.2 + Md.Sig.Power_dBW  + 2 * ToDb(Freq) - Md.Sig.RxGain_dB;
-  Md.Sig.Snr_dB := Md.Sig.Power_dBW - FNoise.Combined;
+  HopCnt := Max(1, FPath.Dist / (BestTxMode^.HopDist + BestRxMode^.HopDist));
+  Md^.HopCnt := Trunc(HopCnt); //{?}
+  Md^.Sig.TxGain_dB := TxAnts.CurrentAntenna.GetGainDb(BestRxMode^.Ref.Elevation);
+  Md^.Sig.RxGain_dB := RxAnts.CurrentAntenna.GetGainDb(BestTxMode^.Ref.Elevation);
+  Md^.Sig.Delay_ms := PathLen / VofL;
+  Md^.Ref.Elevation := BestTxMode^.Ref.Elevation;
+  Md^.AbsorptionLoss := 0.5 * (BestTxMode^.AbsorptionLoss + BestRxMode^.AbsorptionLoss);
+  Md^.Obscuration := 0.5 * (BestTxMode^.Obscuration + BestRxMode^.Obscuration);
+  Md^.DeviationTerm := 0.5 * (BestTxMode^.DeviationTerm + BestRxMode^.DeviationTerm);
+  Md^.Sig.Power_dBW := TxAnts.CurrentAntenna.TxPower_dBW - Md^.Sig.TotalLoss_dB;
+  Md^.Sig.Field_dBuV := 107.2 + Md^.Sig.Power_dBW  + 2 * ToDb(Freq) - Md^.Sig.RxGain_dB;
+  Md^.Sig.Snr_dB := Md^.Sig.Power_dBW - FNoise.Combined;
 
   //LOWER DECILE, UPPER DECILE
-  Dec := CalcDeciles(Freq, BestTxMode.Layer);
-  if BestRxMode.Layer <> BestTxMode.Layer then
-    with CalcDeciles(Freq, BestRxMode.Layer) do
+  Dec := CalcDeciles(Freq, BestTxMode^.Layer);
+  if BestRxMode^.Layer <> BestTxMode^.Layer then
+    with CalcDeciles(Freq, BestRxMode^.Layer) do
       begin
       Dec.Lo := 0.5 * (Dec.Lo + Lo);
       Dec.Hi := 0.5 * (Dec.Hi + Hi);
       end;
-  Md.Sig.Power10 := Min(25, Adj_Signal_10 + HopCnt * Dec.Lo);
-  Md.Sig.Power90 := Min(25, Adj_Signal_90 + HopCnt * Dec.Hi);
+  Md^.Sig.Power10 := Min(25, Adj_Signal_10 + HopCnt * Dec.Lo);
+  Md^.Sig.Power90 := Min(25, Adj_Signal_90 + HopCnt * Dec.Hi);
 
   //F.DAYS
-  Md.Sig.MufDay := Min(BestTxMode.Sig.MufDay, BestRxMode.Sig.MufDay);
+  Md^.Sig.MufDay := Min(BestTxMode^.Sig.MufDay, BestRxMode^.Sig.MufDay);
 
   Result := AnalyzeReliability;
   Result.ServiceProb := CalcServiceProb;
 
   Result.Method := mdLong;
-  Result.ModeT := BestTxMode.Layer;
-  Result.ModeR := BestRxMode.Layer;
-  Result.RxElevation := BestRxMode.Ref.Elevation;
+  Result.ModeT := BestTxMode^.Layer;
+  Result.ModeR := BestRxMode^.Layer;
+  Result.RxElevation := BestRxMode^.Ref.Elevation;
 end;
 
 
@@ -1354,11 +1354,11 @@ begin
   DEND := Min(Rad_4000Km, FPath.Dist);
 
   Result := @AModes[0];
-  Hops := DEND / Result.HopDist;
+  Hops := DEND / Result^.HopDist;
   BestFrac := Abs(Hops - Round(Hops));
-  BestGain := AAnts.CurrentAntenna.GetGainDb(Result.Ref.Elevation) -
-    Hops * (Result.AbsorptionLoss + Result.DeviationTerm);
-  BestAngle := Abs(Result.Ref.Elevation - DELOPT);
+  BestGain := AAnts.CurrentAntenna.GetGainDb(Result^.Ref.Elevation) -
+    Hops * (Result^.AbsorptionLoss + Result^.DeviationTerm);
+  BestAngle := Abs(Result^.Ref.Elevation - DELOPT);
 
 
   for i:=1 to High(AModes) do
