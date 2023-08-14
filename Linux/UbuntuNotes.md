@@ -1,13 +1,13 @@
-#Building DVOACAP On Ubuntu
+# Building DVOACAP On Ubuntu
 
 This document describes how to compile and install the DVOACAP library and associated DVoaDllTestCmd application on Ubuntu 13.10.
 
-##Prerequisites
+## Prerequisites
 The [Free Pascal](http://www.freepascal.org/) compiler required to build the application is available in the Ubuntu repositories and may be installed with the following command;
     
     sudo apt-get install fp-compiler
 
-##Building the library
+## Building the library
 From the directory 'DVoaDll' directory, execute the following commands to build the library and install it under /usr/lib.  The following assumes the use of the sudo command to elevate user privileges when installing the library.
 
     $ fpc -MDELPHI -B -fPIC dvoa.dpr
@@ -16,7 +16,7 @@ From the directory 'DVoaDll' directory, execute the following commands to build 
     $ sudo ldconfig
 
 
-##Building the DVoaDllTestCmd Application
+## Building the DVoaDllTestCmd Application
 The DVoaDllTestCmd application may be used to test the library and is built from the DVoaDllTestCmd directory with the following command to create the _DVoaDllTestCmd_ executable;
 
     $ fpc -MDELPHI -B DVoaDllTestCmd.dpr
@@ -25,32 +25,79 @@ The DVoaDllTestCmd does not accept any arguments and assumes the presence of a J
 
     $ ./DVoaDllTestCmd
 
-##Using the library from Python scripts
-The _predict_ method in the following script illustrates how the library may be accessed from within Python scripts using the ctypes functionality;
+## Using the library from Python scripts
+The _predict_ method in the following scripts (for Python 2 and 3) illustrates how the library may be accessed from within Python scripts using the ctypes functionality.
+
+### Python 2 example
 
     import argparse
     from ctypes import *
 
     def predict(in_file, out_file):
-        dvoacap = CDLL("libdvoa.so") #define the library
-        dvoacap.Predict.restype=c_char_p #define the return type (char *)
-        out_file.write(dvoacap.Predict(in_file.read())) #do the prediction...
+        dvoacap = CDLL("libdvoa.so")  # define the library
+        dvoacap.Predict.restype=c_char_p  # define the return type (char *)
+        out_file.write(dvoacap.Predict(in_file.read()))  # do the prediction...
     
 
     if __name__ == "__main__":
         parser = argparse.ArgumentParser(description="Wrapper for the DVOACAP library")
-        parser.add_argument("-i", "--infile", \
-                            default='input.json', 
-                            type=argparse.FileType(), \
-                            help="json formatted input file")
-        parser.add_argument("-o", "--outfile", \
-                            default='output.txt', \
-                            type=argparse.FileType('w'), \
-                            help="formatted prediction output")
+        parser.add_argument(
+            "-i",
+            "--infile",
+            default="input.json",
+            type=argparse.FileType(),
+            help="json formatted input file",
+        )
+        parser.add_argument(
+            "-o",
+            "--outfile",
+            default="output.txt",
+            type=argparse.FileType("w"),
+            help="formatted prediction output",
+        )
         args = parser.parse_args()
-    
+
         predict(args.infile, args.outfile)
         args.infile.close()
-        args.outfile.close() 
+        args.outfile.close()
 
-The script reprodices the functionality of DVoaDllTestCmd but accepts arguments for the input and output files.  If arguments are not provided, the names 'input.json' and 'output.txt' are assumed.
+### Python 3 example
+
+    import argparse
+    from ctypes import *
+
+
+    def predict(in_file, out_file):
+        dvoacap = CDLL("libdvoa.so")  # define the library
+        dvoacap.Predict.restype = c_char_p  # define the return type (char *)
+        in_str = in_file.read().encode()
+
+        predict_txt = dvoacap.Predict(in_str)
+
+        out_file.write(predict_txt.decode())  # do the prediction...
+        print("Done")
+
+
+    if __name__ == "__main__":
+        parser = argparse.ArgumentParser(description="Wrapper for the DVOACAP library")
+        parser.add_argument(
+            "-i",
+            "--infile",
+            default="input.json",
+            type=argparse.FileType(),
+            help="json formatted input file",
+        )
+        parser.add_argument(
+            "-o",
+            "--outfile",
+            default="output.txt",
+            type=argparse.FileType("w"),
+            help="formatted prediction output",
+        )
+        args = parser.parse_args()
+
+        predict(args.infile, args.outfile)
+        args.infile.close()
+        args.outfile.close()
+
+The scripts reproduce the functionality of DVoaDllTestCmd but accepts arguments for the input and output files.  If arguments are not provided, the names 'input.json' and 'output.txt' are assumed.
