@@ -69,6 +69,20 @@ extern "C" {char* __declspec(dllexport) __stdcall Predict(char* ArgsStr);}
 
 
 
+License
+-------
+
+DVOACAP is distributed under the MIT License, see the LICENSE file.
+
+One file is third-party and is not covered by that license:
+DVoaDll/3rdParty_Json/superobject.pas, the Super Object Toolkit by Henri
+Gourvest, licensed under either the LGPL or the Mozilla Public License 1.1.
+It is used only by the dvoa.dll JSON wrapper. The prediction engine in the
+DVoaClass folder does not depend on it. See THIRD-PARTY-NOTICES.md.
+
+
+
+
 Version history
 
 v.0.931b
